@@ -1,19 +1,46 @@
 use classicmodels;
 
 -- task 1
-select customers.customerNumber from customers inner join orders on customers.customerNumber = orders.customerNumber where orders.status="Shipped";
+
+SELECT 
+    customerName
+FROM
+    customers
+WHERE
+    customerNumber IN (SELECT 
+            customerNumber
+        FROM
+            payments
+        WHERE
+            amount > 30000);
+
+
+
+
+
+
+
 
 -- task 2
-select customers.customerName from customers where customers.customerNumber in (select customerNumber from payments where amount >80000);
+
+SELECT 
+    customerName
+FROM
+    customers
+WHERE
+    salesRepEmployeeNumber IN (SELECT 
+            employeeNumber
+        FROM
+            employees,
+            offices
+        WHERE
+            employees.officeCOde = offices.officeCode
+                AND employees.jobTitle = 'Sales Rep'
+                AND offices.territory = 'Japan');
+
+
 
 -- task 3
-select employees.firstName from employees inner join offices on employees.officeCode=offices.officeCode where offices.country="USA" and employees.jobTitle="Sales Rep";
+select customerNumber from customers order by asc;
 
--- task 4
-select * from employees where employeeNumber in(select employees.employeeNumber from employees, offices where employees.officeCode = offices.officeCode and offices.city="Sydney");
-
--- task 5
-select customers.customerName, orders.orderDate from customers inner join orders on customers.customerNumber = orders.customerNumber where orders.orderNumber between 10101 and 10110;
-
--- task 6
-select distinct productCode, productName from products where productCode in (select productCode from orderdetails where quantityOrdered > 30);
+SELECT customers.customerNumber FROM customers INNER JOIN orders ON orders.customerNumber = customers.customerNumber WHERE orders.status = 'Shipped';
