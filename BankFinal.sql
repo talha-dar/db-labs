@@ -1,5 +1,3 @@
-
-drop database bankschema;
 create database bankschema;
 use bankschema;
 
